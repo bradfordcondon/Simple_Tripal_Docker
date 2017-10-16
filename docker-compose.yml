@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+
+  web:
+    links:
+      db:postgres
+      elasticsearch:elasticsearch
+    volumes:
+       - /var/www/html/sites
+    ports:
+       - "3000:80"
+  db:
+    image: postgres
+
+  elasticsearch:
+    image: elasticsearch
+
+  phppgadmin:
+    image: phppgadmin
