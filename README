@@ -91,6 +91,11 @@ service httpd restart
 
 Thank you to Eric Rasche who maintains an excellent Tripal container, from which I borrowed liberally.  
 
+ wnameless/postgresql-phppgadmin info:
+ username: postgres
+ password: postgres
+ 
+
 ```
 docker build --tag test_container . 
 docker run --interactive --tty test_container

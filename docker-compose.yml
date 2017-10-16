@@ -11,10 +11,9 @@ services:
     ports:
        - "3000:80"
   db:
-    image: postgres
+    image:  wnameless/postgresql-phppgadmin
 
   elasticsearch:
     image: elasticsearch
 
-  phppgadmin:
-    image: phppgadmin
+  
