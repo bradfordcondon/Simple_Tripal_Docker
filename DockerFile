@@ -1,3 +1,30 @@
 FROM php:apache
 MAINTAINER Bradford Condon <bradford.condon@gmail.com>
 
+# Update apache2 configuration for drupal
+#RUN a2enmod rewrite && a2enmod proxy && a2enmod proxy_http
+
+ENV PACKAGES wget git
+run apt-get update && apt-get install --yes ${PACKAGES}
+
+
+# Install composer and drush by using composer
+ENV COMPOSER_BIN_DIR=/usr/local/bin
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+ && composer global require drush/drush:7.* \
+ && drush cc drush \
+ && mkdir /etc/drush && echo "<?php\n\$options['yes'] = TRUE;\n\$options['v'] = TRUE;\n" > /etc/drush/drushrc.php
+
+RUN wget https://github.com/erasche/chado-schema-builder/releases/download/1.31-jenkins110/chado-1.31-tripal.sql.gz -O /chado-master-tripal.sql.gz \
+    && wget --no-check-certificate https://drupal.org/files/drupal.pgsql-bytea.27.patch -O /drupal.pgsql-bytea.27.patch
+
+# Install elasticsearch php library (required by tripal_elasticsearch)
+RUN cd /var/www/html/sites/all/libraries/\
+    && mkdir elasticsearch-php \
+    && cd elasticsearch-php \
+    && composer require "elasticsearch/elasticsearch:~5.0" \
+    && cd /var/www/html/
+
+# Allow rewrite modules
+#RUN cd /etc/apache2/mods-enabled\
+#    && sudo ln -s ../mods-available/rewrite.load

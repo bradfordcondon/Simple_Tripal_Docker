@@ -20,7 +20,7 @@ default password: P@55w0rd
 ```
 docker commit docker-tripal-v3 docker_tripal_3_loaded
 
-docker run -ti --name docker_tripal3_remapped -v ~/UTK/dockers/modules:/var/www/html/sites/all/modules/tripal_extensions -v ~/UTK/dockers/data_files:/var/www/html/sites/default/files/host -v  ~/UTK/dockers/tripal:/var/www/html/sites/all/modules/tripal -p 8080:80 docker_tripal_3_loaded /bin/bash
+docker run -ti -v ~/UTK/dockers/modules:/var/www/html/sites/all/modules/tripal_extensions -v ~/UTK/dockers/data_files:/var/www/html/sites/default/files/host -v  ~/UTK/dockers/tripal:/var/www/html/sites/all/modules/tripal -p 8080:80 docker_tripal_3_loaded /bin/bash
 ```
 
 
@@ -85,3 +85,13 @@ service httpd restart
 
 ` http://192.168.1.100/phpPgAdmin/`
 
+
+
+# Building my own container
+
+Thank you to Eric Rasche who maintains an excellent Tripal container, from which I borrowed liberally.  
+
+```
+docker build --tag test_container . 
+docker run --interactive --tty test_container
+```
