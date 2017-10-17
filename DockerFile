@@ -1,10 +1,10 @@
 FROM php:apache
-MAINTAINER Bradford Condon <bradford.condon@gmail.com>
+LABEL maintainer="bradford.condon@gmail.com"
 
 # Update apache2 configuration for drupal
 #RUN a2enmod rewrite && a2enmod proxy && a2enmod proxy_http
 
-ENV PACKAGES wget git
+ENV PACKAGES wget git zlib1g-dev zip
 run apt-get update && apt-get install --yes ${PACKAGES}
 
 
@@ -18,30 +18,38 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 #install Drupal
 RUN  cd /var/www/html\
    && wget http://ftp.drupal.org/files/projects/drupal-7.56.tar.gz\
-   &&     tar -zxvf drupal-7.56.tar.gz\
+   && tar -zxvf drupal-7.56.tar.gz\
    && mv drupal-7.56/* ./\
    && mv drupal-7.56/.htaccess ./\
-  # && mv index.html index.html.orig\
-   &&    ls -l .htaccess\
-   &&   cd /var/www/html/sites/default/\
-   ## SETTINGS .PHP FILE!!!!
+   && ls -l .htaccess\
+   && cd /var/www/html/sites/default/\
    && mkdir -p /var/www/html/sites/default/files\
    && chgrp www-data /var/www/html/sites/default/files\
    && chmod g+rw /var/www/html/sites/default/files
 
-
-
-#RUN wget https://github.com/erasche/chado-schema-builder/releases/download/1.31-jenkins110/chado-1.31-tripal.sql.gz -O /chado-master-tripal.sql.gz \
-#    && wget --no-check-certificate https://drupal.org/files/drupal.pgsql-bytea.27.patch -O /drupal.pgsql-bytea.27.patch
+COPY drupal_settings.php /var/www/html/sites/default/settings.php
 
 #install Elasticsearch-php library
 RUN cd /var/www/html/sites/all/libraries/\
     && mkdir elasticsearch-php \
     && cd elasticsearch-php \
     && composer require "elasticsearch/elasticsearch:~5.0" \
-    && cd /var/www/html/
+    && cd /var/www/html
    # do something else?  I think copy
 
+CMD /bin/bash
+
+# enable pretripal modules
+#RUN drush pm-enable views -y\
+#	&& drush pm-enable ctools -y 
+
+
+#run patches
+#RUN cd /var/www/html/\ 
+#	&& wget --no-check-certificate https://drupal.org/files/drupal.pgsql-bytea.27.patch \
+#	&& patch -p1 < drupal.pgsql-bytea.27.patch \
+#	&& cd /var/www/html/sites/all/modules/views \
+#	&& patch -p1 < ../tripal/tripal_chado_views/views-sql-compliant-three-tier-naming-1971160-30.patch \
 
 # Allow rewrite modules
 #RUN cd /etc/apache2/mods-enabled\
