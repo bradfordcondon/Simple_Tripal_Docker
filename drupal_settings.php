@@ -1,4 +1,4 @@
-/**
+/** dsfjlafjdlakshgasl
  * @file
  * Drupal site-specific configuration file.
  *
@@ -379,7 +379,7 @@ ini_set('session.cookie_lifetime', 2000000);
  * Remove the leading hash signs to enable.
  */
 
-# $conf['site_name'] = 'My Drupal site';
+ $conf['site_name'] = 'My Drupal site';
 
 # $conf['theme_default'] = 'garland';
 

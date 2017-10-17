@@ -5,14 +5,13 @@ services:
     build: .
     links:
      - db:postgres
-     - elasticsearch:elasticsearch
+     - es:elasticsearch
     volumes:
       - ./tripal:/var/www/html/sites/all/modules/tripal
       - ./modules:/var/www/html/sites/all/modules/tripal_extensions
     ports:
       - "80:80"
     tty: true
-
   db:
     image:  wnameless/postgresql-phppgadmin
     volumes: 
@@ -21,7 +20,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: tripal
-  elasticsearch:
+  es:
     image: elasticsearch
 volumes:
   psql:

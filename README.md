@@ -8,6 +8,8 @@ Until I set up Docker compose, the container can be launched like this:
 The `files` and `modules` folders allow for module development and data to persist between machines.
 
 
+[Docker container and image management cheatsheet](https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes)
+
 ## Login:
 
 ```
