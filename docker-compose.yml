@@ -10,8 +10,8 @@ services:
       - ./tripal:/var/www/html/sites/all/modules/tripal
       - ./modules:/var/www/html/sites/all/modules/tripal_extensions
     ports:
-      - "3000:80"
-    entrypoint: /bin/bash
+      - "80:80"
+    tty: true
 
   db:
     image:  wnameless/postgresql-phppgadmin
