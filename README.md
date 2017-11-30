@@ -3,13 +3,19 @@ For managing my Docker Tripal site.
 
 Until I set up Docker compose, the container can be launched like this:
 
-`docker run -ti -v ~/UTK/dockers/modules:/var/www/html/sites/all/modules/tripal_extensions -v ~/UTK/dockers/data_files:/var/www/html/sites/default/files/host -v ~/UTK/dockers/tripal:/var/www/html/sites/all/modules/tripal -p 8080:80 bcondon/docker_tripal3 /bin/bash`
+`docker run -ti -v ~/UTK/dockers/modules:/var/www/html/sites/all/modules/tripal_extensions -v ~/UTK/dockers/data_files:/var/www/html/sites/default/files/host -v ~/UTK/dockers/tripal:/var/www/html/sites/all/modules/tripal -p 8080:80 bcondon/docker_tripal3:withExpression /bin/bash`
 
 Alternatively I can run the base container, without elasticsearch set up/ without developer sequences loaded, like so.
 
-`docker run -it --rm --name docker_tripal_v3 -v ~/UTK/dockers/modules:/var/www/html/sites/all/modules/tripal_extensions -v ~/UTK/dockers/data_files:/var/www/html/sites/default/files/host  -p 8080:80 mingchen0919/docker-tripal-v3 /bin/bash`
+`docker run -it --rm --name docker_tripal_v3 -v ~/UTK/dockers/modules:/var/www/html/sites/all/modules/tripal_extensions -v ~/UTK/dockers/data_files:/var/www/html/sites/default/files/host -v ~/UTK/dockers/tripal:/var/www/html/sites/all/modules/tripal  -p 8080:80 mingchen0919/docker-tripal-v3 /bin/bash`
 
 The `files` and `modules` folders allow for module development and data to persist between machines.
+
+The following modules are installed (and should therefore exist if you map a modules directory)
+
+* tripal_analysis_expression
+* tripal_ssr
+* tripal_elasticsearch
 
 
 

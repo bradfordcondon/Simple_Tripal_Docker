@@ -2,7 +2,7 @@ FROM php:apache
 LABEL maintainer="bradford.condon@gmail.com"
 
 # Update apache2 configuration for drupal
-RUN a2enmod rewrite && a2enmod proxy && a2enmod proxy_http
+#RUN a2enmod rewrite && a2enmod proxy && a2enmod proxy_http
 
 ENV PACKAGES wget git zlib1g-dev zip
 run apt-get update && apt-get install --yes ${PACKAGES}
@@ -41,7 +41,7 @@ RUN cd /var/www/html/sites/all/libraries/\
 #RUN drush pm-enable views -y\
 #	&& drush pm-enable ctools -y 
 
-RUN service apache2 restart
+#RUN service apache2 restart
 
 #run patches
 #RUN cd /var/www/html/\ 
@@ -51,5 +51,5 @@ RUN service apache2 restart
 #	&& patch -p1 < ../tripal/tripal_chado_views/views-sql-compliant-three-tier-naming-1971160-30.patch \
 
 # Allow rewrite modules
-RUN cd /etc/apache2/mods-enabled\
-    && ln -s ../mods-available/rewrite.load
+#RUN cd /etc/apache2/mods-enabled\
+#    && ln -s ../mods-available/rewrite.load
